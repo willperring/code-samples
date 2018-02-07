@@ -1,0 +1,11 @@
+<div *ngIf="dialogBox.modal" class="modalGuard"></div>
+<div #dialogElement [@dialogFadeInOut] class="dialogBox panel" [ngClass]="getPanelClasses()" [ngStyle]="getPanelStyles()">
+  <div class="panel-heading">Alert!</div>
+  <div class="panel-body dialogMessage" [innerHTML]="getSanitizedMessage()"></div>
+  <div class="panel-body clearfix">
+    <div class="buttons pull-right">
+      <a *ngFor="let button of dialogBox.buttons" [ngClass]="getButtonClasses(button)"
+         (click)="onButtonInteraction(button)">{{getButtonCaption(button)}}</a>
+    </div>
+  </div>
+</div>

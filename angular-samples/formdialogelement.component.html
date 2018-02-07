@@ -1,0 +1,51 @@
+<th class="elementLabel" *ngIf="formElement.params.fullWidth == false">
+  <span class="fieldLabel">{{formElement.params.title}}</span>
+  <span class="fieldIcons">
+    <a class="fieldIcon requiredIcon" *ngIf="classRequired">
+      <span class="icon-info"></span>
+      <p class="helpTip">Field is required</p>
+    </a>
+    <a class="fieldIcon helpIcon" *ngIf="formElement.params.helpText">
+      <span class="icon-question"></span>
+      <p class="helpTip">{{formElement.params.helpText}}</p>
+    </a>
+  </span>
+</th>
+<td class="elementField" [attr.colpsan]="formElement.params.fullWidth ? 2 : 1">
+
+  <!-- Text inputs, passwords, anything that requires a single self-closing input tag -->
+  <input *ngIf="getInputType() == 'single'" [type]="formElement.type" [attr.disabled]="classDisabled" [name]="formElement.name"
+         [(ngModel)]="formElement.value" [placeholder]="formElement.params.placeholder" (change)="onChange()"
+         [ngClass]="{disabled:classDisabled}" class="form-control" />
+
+  <!-- Select Dropdown -->
+  <select *ngIf="getInputType() == 'select'" [name]="formElement.name" [attr.disabled]="classDisabled" [(ngModel)]="formElement.value"
+          [ngClass]="{disabled:classDisabled}" class="form-control" (change)="onChange()">
+    <option *ngFor="let option of formElement.params.options" [value]="option.id">{{option.title}}</option>
+  </select>
+
+  <!-- Radio Group -->
+  <ng-container *ngIf="getInputType() == 'radio'">
+    <label *ngFor="let option of formElement.params.options" [ngClass]="{block:formElement.params.blockOptions, disabled:classDisabled}">
+      <input type="radio" [name]="formElement.name" [value]="option.id" [attr.disabled]="classDisabled" [ngClass]="{disabled:classDisabled}"
+             [(ngModel)]="formElement.value" (change)="onChange()">
+      <span class="optionTitle radioTitle">{{option.title}}</span>
+    </label>
+  </ng-container>
+
+  <!-- Checkbox Group -->
+  <ng-container *ngIf="getInputType() == 'checkgroup'">
+    <label *ngFor="let option of formElement.params.options" [ngClass]="{block:formElement.params.blockOptions, disabled:classDisabled}">
+      <input type="checkbox" [name]="formElement.name" [value]="option.id" [attr.disabled]="classDisabled" [ngClass]="{disabled:classDisabled}"
+             [ngModel]="formElement.value[option.id]"
+             (change)="onCheckGroupChange(option.id, $event.target.checked)">
+      <span class="optionTitle checkGrpTitle">{{option.title}}</span>
+    </label>
+  </ng-container>
+
+  <!-- Tag Field (Segment Editor) -->
+  <tagfield *ngIf="getInputType() == 'tagfield'" [(ngModel)]="formElement.value" [attr.disabled]="classDisabled"></tagfield>
+
+  <p class="statusNote" *ngFor="let note of formElement.statusMessages" [ngClass]="note.type">{{note.message}}</p>
+
+</td>

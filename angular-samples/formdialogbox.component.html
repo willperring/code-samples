@@ -1,0 +1,17 @@
+<div *ngIf="dialogBox.modal" class="modalGuard"></div>
+<div #dialogElement class="dialogBox formDialog panel" [ngClass]="getPanelClasses()" [ngStyle]="getPanelStyles()">
+  <div class="panel-heading">{{dialogBox.title}}</div>
+  <div class="panel-body" *ngIf="dialogBox.message" [innerHTML]="dialogBox.message"></div>
+  <div class="panel-body table">
+    <table class="table">
+      <formdialogelement *ngFor="let formElement of getFormElements()" [formElement]="formElement"
+                         [dialogComponent]="getSelf()"></formdialogelement>
+    </table>
+  </div>
+  <div class="panel-body clearfix">
+    <div class="buttons pull-right">
+      <a *ngFor="let button of dialogBox.buttons" [ngClass]="getButtonClasses(button)"
+         (click)="onButtonInteraction(button)">{{getButtonCaption(button)}}</a>
+    </div>
+  </div>
+</div>

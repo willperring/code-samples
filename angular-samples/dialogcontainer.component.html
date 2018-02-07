@@ -1,0 +1,12 @@
+<div class="dialogContainerWrapper" *ngIf="overlayVisible()" [@containerFadeInOut]="'visible'">
+
+  <div class="dialogContainerOverlay" [@overlayFadeInOut]="'visible'"></div>
+
+  <div class="dialogWrapper">
+    <ng-container *ngFor="let dialogBox of getDialogs()">
+      <dialogbox     *ngIf="dialogBox._componentClass == 'DialogBoxComponent'"     [dialogBox]="dialogBox"></dialogbox>
+      <formdialogbox *ngIf="dialogBox._componentClass == 'FormDialogBoxComponent'" [dialogBox]="dialogBox"></formdialogbox>
+    </ng-container>
+  </div>
+</div>
+
